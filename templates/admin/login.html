@@ -58,7 +58,6 @@
 {% block titre %}Connexion - SSMSI{% endblock %}
 
 {% block contenu %}
-    {% include "partials/navbar.html" %}
     <div class="login-container">
         <div class="login-title">Connexion à l’espace SSMSI</div>
         {% if form.errors or form.non_field_errors %}
@@ -83,5 +82,4 @@
         </form>
         {# Lien mot de passe oublié supprimé pour usage interne #}
     </div>
-    {% include "partials/footer.html" with year=2026 %}
 {% endblock %}

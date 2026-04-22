@@ -1,3 +1,17 @@
+.navbar-admin-btn {
+    background: var(--orange-principal);
+    color: #fff !important;
+    padding: 0.4rem 1.1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.2s;
+    margin-left: 1.5rem;
+}
+.navbar-admin-btn:hover {
+    background: #a3470d;
+    color: #fff;
+}
 .navbar {
     width: 100%;
     background: var(--bleu-principal);

@@ -10,9 +10,17 @@
 
     {% block scripts_head %}{% endblock %}
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
 
-    {% block contenu %}{% endblock %}
+
+    {% include "partials/navbar.html" %}
+    <div style="flex: 1 0 auto;">
+        {% block contenu %}{% endblock %}
+    </div>
+
+    <div style="flex-shrink: 0;">
+        {% include "partials/footer.html" with year=2026 %}
+    </div>
 
     {% block scripts %}{% endblock %}
 </body>
