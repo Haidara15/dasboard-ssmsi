@@ -1,0 +1,205 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Statistiques — {{ site_header }}{% endblock %}
+
+{% block content_title %}
+<h1>Tableau de bord — Statistiques</h1>
+{% endblock %}
+
+{% block content %}
+
+<style>
+.stat-section h2 { font-size:1.1rem;font-weight:600;margin-bottom:.75rem;color:inherit; }
+.stat-table { width:100%;border-collapse:collapse;border-radius:8px;overflow:hidden; }
+.stat-table thead tr { background:var(--color-primary-600,#3b5fa0);color:#fff; }
+.stat-table th, .stat-table td { padding:.6rem 1rem; }
+.stat-table th { text-align:left; }
+.stat-table td { color:inherit; }
+.stat-table tbody tr { border-top:1px solid currentColor;border-top-color:var(--color-base-200,#e5e7eb); }
+.dark .stat-table tbody tr { border-top-color:rgba(255,255,255,.1); }
+.stat-bar-bg { flex:1;border-radius:999px;height:8px;background:var(--color-base-200,#e5e7eb); }
+.dark .stat-bar-bg { background:rgba(255,255,255,.15); }
+.stat-bar-fg { height:8px;border-radius:999px;background:var(--color-primary-500,#4a72b5); }
+.stat-pct { font-size:.8rem;min-width:2.5rem;color:inherit;opacity:.7; }
+.stat-link { font-weight:500;color:var(--color-primary-600,#3b5fa0); }
+.dark .stat-link { color:var(--color-primary-300,#93b4e0); }
+.stat-sub { opacity:.6;font-size:.8rem; }
+.stat-filters { display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem;align-items:flex-end; }
+.stat-filters select, .stat-filters input[type=text] {
+  padding:.4rem .75rem;border-radius:6px;border:1px solid var(--color-base-300,#d1d5db);
+  background:var(--color-base-50,#f9fafb);color:inherit;font-size:.875rem;min-width:180px;
+}
+.dark .stat-filters select, .dark .stat-filters input[type=text] {
+  background:var(--color-base-800,#1f2937);border-color:var(--color-base-600,#4b5563);
+}
+.stat-filters button {
+  padding:.4rem .9rem;border-radius:6px;border:none;cursor:pointer;font-size:.875rem;
+  background:var(--color-primary-600,#3b5fa0);color:#fff;
+}
+.stat-filters button.reset {
+  background:transparent;border:1px solid var(--color-base-400,#9ca3af);color:inherit;
+}
+.stat-pagination { display:flex;align-items:center;gap:.5rem;margin-top:.75rem;font-size:.875rem;flex-wrap:wrap; }
+.stat-pagination a, .stat-pagination span {
+  padding:.25rem .6rem;border-radius:4px;border:1px solid var(--color-base-300,#d1d5db);text-decoration:none;color:inherit;
+}
+.stat-pagination a:hover { background:var(--color-primary-50,#eef3fb); }
+.stat-pagination .current { background:var(--color-primary-600,#3b5fa0);color:#fff;border-color:transparent; }
+</style>
+
+<!-- Compteurs globaux -->
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;">
+  {% include "admin/_stat_card.html" with label="Thématiques" value=nb_thematiques sub=nb_thematiques_actives sub_label="actives" icon="topic" %}
+  {% include "admin/_stat_card.html" with label="Graphiques" value=nb_graphiques sub=nb_graphiques_actifs sub_label="actifs" icon="insert_chart" %}
+  {% include "admin/_stat_card.html" with label="Séries" value=nb_series sub="" sub_label="" icon="stacked_line_chart" %}
+  {% include "admin/_stat_card.html" with label="Observations" value=nb_observations sub="" sub_label="" icon="table_rows" %}
+</div>
+
+<!-- Liste détaillée des graphiques -->
+<div class="stat-section" style="margin-bottom:2rem;">
+  <h2>Liste des graphiques <small class="stat-sub">({{ paginator_g.count }} au total)</small></h2>
+
+  <form method="get" class="stat-filters">
+    {# conserver les filtres observations dans l'URL #}
+    {% if f_o_thematique %}<input type="hidden" name="o_thematique" value="{{ f_o_thematique }}">{% endif %}
+    {% if f_o_graphique %}<input type="hidden" name="o_graphique" value="{{ f_o_graphique }}">{% endif %}
+    {% if f_o_serie %}<input type="hidden" name="o_serie" value="{{ f_o_serie }}">{% endif %}
+    {% if f_o_recherche %}<input type="hidden" name="o_recherche" value="{{ f_o_recherche }}">{% endif %}
+
+    <select name="g_thematique">
+      <option value="">— Toutes les thématiques —</option>
+      {% for t in thematiques_liste %}
+      <option value="{{ t.code }}" {% if f_g_thematique == t.code %}selected{% endif %}>{{ t.titre }}</option>
+      {% endfor %}
+    </select>
+    <input type="text" name="g_recherche" value="{{ f_g_recherche }}" placeholder="Rechercher un titre…">
+    <button type="submit">Filtrer</button>
+    {% if f_g_thematique or f_g_recherche %}
+    <a href="?{% if f_o_thematique %}o_thematique={{ f_o_thematique }}&{% endif %}{% if f_o_graphique %}o_graphique={{ f_o_graphique }}&{% endif %}{% if f_o_serie %}o_serie={{ f_o_serie }}&{% endif %}{% if f_o_recherche %}o_recherche={{ f_o_recherche }}{% endif %}" class="stat-filters button reset" style="padding:.4rem .9rem;border-radius:6px;border:1px solid var(--color-base-400,#9ca3af);text-decoration:none;color:inherit;font-size:.875rem;">✕ Réinitialiser</a>
+    {% endif %}
+  </form>
+
+  <table class="stat-table">
+    <thead>
+      <tr>
+        <th>Thématique</th>
+        <th>Titre du graphique</th>
+        <th>Type</th>
+        <th style="text-align:right;">Rang</th>
+        <th style="text-align:center;">Actif</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for g in page_g %}
+      <tr>
+        <td class="stat-sub">{{ g.thematique.titre }}</td>
+        <td>
+          <a href="{% url 'admin:dashboard_graphique_change' g.pk %}" class="stat-link">{{ g.titre }}</a>
+          <br><small class="stat-sub">{{ g.code }}</small>
+        </td>
+        <td>{{ g.get_type_graphique_display }}</td>
+        <td style="text-align:right;font-variant-numeric:tabular-nums;">{{ g.ordre }}</td>
+        <td style="text-align:center;">
+          {% if g.actif %}
+          <span style="display:inline-block;width:.75rem;height:.75rem;border-radius:50%;background:#22c55e;" title="Actif"></span>
+          {% else %}
+          <span style="display:inline-block;width:.75rem;height:.75rem;border-radius:50%;background:#ef4444;" title="Inactif"></span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="stat-sub" style="padding:1rem;">Aucun graphique trouvé.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if paginator_g.num_pages > 1 %}
+  <div class="stat-pagination">
+    <span>Page {{ page_g.number }} / {{ paginator_g.num_pages }}</span>
+    {% if page_g.has_previous %}
+    <a href="?page_g={{ page_g.previous_page_number }}&g_thematique={{ f_g_thematique }}&g_recherche={{ f_g_recherche }}&o_thematique={{ f_o_thematique }}&o_graphique={{ f_o_graphique }}&o_serie={{ f_o_serie }}&o_recherche={{ f_o_recherche }}&page_o={{ page_o.number }}">‹ Précédent</a>
+    {% endif %}
+    {% if page_g.has_next %}
+    <a href="?page_g={{ page_g.next_page_number }}&g_thematique={{ f_g_thematique }}&g_recherche={{ f_g_recherche }}&o_thematique={{ f_o_thematique }}&o_graphique={{ f_o_graphique }}&o_serie={{ f_o_serie }}&o_recherche={{ f_o_recherche }}&page_o={{ page_o.number }}">Suivant ›</a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- Liste des observations -->
+<div class="stat-section">
+  <h2>Liste des observations <small class="stat-sub">({{ paginator_o.count }} au total)</small></h2>
+
+  <form method="get" class="stat-filters">
+    {# conserver les filtres graphiques dans l'URL #}
+    {% if f_g_thematique %}<input type="hidden" name="g_thematique" value="{{ f_g_thematique }}">{% endif %}
+    {% if f_g_recherche %}<input type="hidden" name="g_recherche" value="{{ f_g_recherche }}">{% endif %}
+
+    <select name="o_thematique">
+      <option value="">— Toutes les thématiques —</option>
+      {% for t in thematiques_liste %}
+      <option value="{{ t.code }}" {% if f_o_thematique == t.code %}selected{% endif %}>{{ t.titre }}</option>
+      {% endfor %}
+    </select>
+    <select name="o_graphique">
+      <option value="">— Tous les graphiques —</option>
+      {% for g in graphiques_liste %}
+      <option value="{{ g.code }}" {% if f_o_graphique == g.code %}selected{% endif %}>{{ g.thematique.titre }} — {{ g.titre }}</option>
+      {% endfor %}
+    </select>
+    <input type="text" name="o_serie" value="{{ f_o_serie }}" placeholder="Série…" style="min-width:130px;">
+    <input type="text" name="o_recherche" value="{{ f_o_recherche }}" placeholder="Code X ou libellé…">
+    <button type="submit">Filtrer</button>
+    {% if f_o_thematique or f_o_graphique or f_o_serie or f_o_recherche %}
+    <a href="?{% if f_g_thematique %}g_thematique={{ f_g_thematique }}&{% endif %}{% if f_g_recherche %}g_recherche={{ f_g_recherche }}{% endif %}" class="stat-filters button reset" style="padding:.4rem .9rem;border-radius:6px;border:1px solid var(--color-base-400,#9ca3af);text-decoration:none;color:inherit;font-size:.875rem;">✕ Réinitialiser</a>
+    {% endif %}
+  </form>
+
+  <table class="stat-table">
+    <thead>
+      <tr>
+        <th>Thématique</th>
+        <th>Graphique</th>
+        <th>Série</th>
+        <th>Code X <small class="stat-sub">(technique)</small></th>
+        <th>Libellé X <small class="stat-sub">(affiché)</small></th>
+        <th style="text-align:right;">Valeur</th>
+        <th style="text-align:right;">Rang</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for o in page_o %}
+      <tr>
+        <td class="stat-sub">{{ o.graphique.thematique.titre }}</td>
+        <td>
+          <a href="{% url 'admin:dashboard_graphique_change' o.graphique.pk %}" class="stat-link">{{ o.graphique.titre }}</a>
+        </td>
+        <td>{% if o.serie %}{{ o.serie.libelle }}{% else %}<span class="stat-sub">—</span>{% endif %}</td>
+        <td class="stat-sub" style="font-family:monospace;">{{ o.code_x }}</td>
+        <td>{{ o.libelle_x }}</td>
+        <td style="text-align:right;font-variant-numeric:tabular-nums;">
+          {% if o.valeur_formatee %}{{ o.valeur_formatee }}{% elif o.valeur is not None %}{{ o.valeur }}{% else %}<span class="stat-sub">—</span>{% endif %}
+        </td>
+        <td style="text-align:right;font-variant-numeric:tabular-nums;">{{ o.ordre_x }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="7" class="stat-sub" style="padding:1rem;">Aucune observation trouvée.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% if paginator_o.num_pages > 1 %}
+  <div class="stat-pagination">
+    <span>Page {{ page_o.number }} / {{ paginator_o.num_pages }}</span>
+    {% if page_o.has_previous %}
+    <a href="?page_o={{ page_o.previous_page_number }}&o_thematique={{ f_o_thematique }}&o_graphique={{ f_o_graphique }}&o_serie={{ f_o_serie }}&o_recherche={{ f_o_recherche }}&g_thematique={{ f_g_thematique }}&g_recherche={{ f_g_recherche }}&page_g={{ page_g.number }}">‹ Précédent</a>
+    {% endif %}
+    {% if page_o.has_next %}
+    <a href="?page_o={{ page_o.next_page_number }}&o_thematique={{ f_o_thematique }}&o_graphique={{ f_o_graphique }}&o_serie={{ f_o_serie }}&o_recherche={{ f_o_recherche }}&g_thematique={{ f_g_thematique }}&g_recherche={{ f_g_recherche }}&page_g={{ page_g.number }}">Suivant ›</a>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,132 @@
+.navbar {
+    width: 100%;
+    background: var(--bleu-principal);
+    color: #fff;
+    padding: 0.5rem 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 0;
+}
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+.navbar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+.navbar-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.navbar-links li a:hover {
+    color: var(--orange-principal);
+}
+
+.footer {
+    width: 100%;
+    background: var(--bleu-principal);
+    color: #fff;
+    padding: 1.2rem 0 1.2rem 0;
+    margin-top: 3rem;
+}
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    html, body {
+        height: 100%;
+        min-height: 100%;
+    }
+}
+.footer a {
+    color: #fff;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+.footer a:hover {
+    color: var(--orange-principal);
+}
+:root {
+    --bleu-principal: #1F4E79;
+    --orange-principal: #C55A11;
+    --fond-page: #f7f9fb;
+    --fond-bloc: #ffffff;
+    --texte-principal: #1f2937;
+    --texte-secondaire: #6b7280;
+    --bordure: #e5e7eb;
+    --ombre: 0 6px 18px rgba(0,0,0,0.04);
+    --rayon: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+        margin-top: auto;
+    background: var(--fond-page);
+    margin: 0;
+    padding: 0;
+    color: var(--texte-principal);
+}
+
+.conteneur {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+.bloc {
+    background: var(--fond-bloc);
+    border: 1px solid var(--bordure);
+    border-radius: var(--rayon);
+    box-shadow: var(--ombre);
+}
+
+.retour {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: var(--bleu-principal);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.badge-thematique {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--bleu-principal);
+    text-transform: uppercase;
+}
+
+.meta {
+    margin-top: 16px;
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+.texte-long {
+    line-height: 1.7;
+}

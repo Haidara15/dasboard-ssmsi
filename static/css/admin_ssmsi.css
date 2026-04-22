@@ -1,0 +1,416 @@
+:root {
+    --ssmsi-primary: rgb(60, 77, 136);
+    --ssmsi-secondary: rgb(79, 128, 191);
+    --ssmsi-accent: rgb(255, 116, 47);
+
+    --ssmsi-surface: #f7f9fc;
+    --ssmsi-text: #1f2a44;
+    --ssmsi-text-strong: #121a2f;
+
+    --ssmsi-dark-surface: #0f172a;
+    --ssmsi-dark-panel: #111b33;
+    --ssmsi-dark-panel-2: #16203a;
+    --ssmsi-dark-text: #dbe6ff;
+    --ssmsi-dark-text-strong: #f5f8ff;
+    --ssmsi-dark-muted: #9eb1d6;
+}
+
+body {
+    background: linear-gradient(180deg, #f8fafc 0%, #f3f6fb 100%);
+}
+
+#main {
+    background: linear-gradient(180deg, var(--ssmsi-surface) 0%, #ffffff 18%) !important;
+}
+
+/* Sidebar - light */
+#nav-sidebar,
+#nav-sidebar-inner {
+    background: #ffffff !important;
+}
+
+#nav-sidebar {
+    box-shadow: inset -1px 0 0 rgba(15, 23, 42, 0.08);
+}
+
+#nav-sidebar .border-b {
+    border-color: rgba(15, 23, 42, 0.1) !important;
+}
+
+#nav-sidebar,
+#nav-sidebar * {
+    color: var(--ssmsi-text) !important;
+}
+
+#nav-sidebar a {
+    color: var(--ssmsi-text) !important;
+    border-radius: 10px;
+}
+
+#nav-sidebar a:hover,
+#nav-sidebar a:focus {
+    color: var(--ssmsi-text-strong) !important;
+    background: rgba(60, 77, 136, 0.08) !important;
+}
+
+#nav-sidebar a[aria-current="page"],
+#nav-sidebar a.bg-primary-50,
+#nav-sidebar a[class*="bg-primary"] {
+    color: var(--ssmsi-text-strong) !important;
+    background: rgba(60, 77, 136, 0.14) !important;
+    box-shadow: inset 3px 0 0 var(--ssmsi-accent);
+}
+
+#nav-sidebar .material-symbols-outlined,
+#nav-sidebar svg {
+    color: var(--ssmsi-primary) !important;
+    fill: currentColor;
+}
+
+/* Content readability - light */
+#content,
+#content-main {
+    color: var(--ssmsi-text) !important;
+}
+
+#content-main h1,
+#content-main h2,
+#content-main h3,
+#content-main th,
+#content-main td,
+#content-main p,
+#content-main li,
+#content-main .font-semibold,
+#content-main label,
+#content-main .help,
+#content-main .helptext,
+#content-main .description,
+#content-main .readonly {
+    color: var(--ssmsi-text-strong) !important;
+}
+
+#content-main input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="file"]),
+#content-main select,
+#content-main textarea {
+    color: var(--ssmsi-text-strong) !important;
+    background: #ffffff !important;
+    border-color: rgba(15, 23, 42, 0.18) !important;
+}
+
+/* Dark mode readable */
+html.dark body {
+    background: linear-gradient(180deg, #0b1326 0%, #111b33 100%) !important;
+    color: var(--ssmsi-dark-text) !important;
+}
+
+html.dark #main {
+    background: linear-gradient(180deg, #0f172a 0%, #111b33 24%) !important;
+}
+
+html.dark #nav-sidebar,
+html.dark #nav-sidebar-inner {
+    background: linear-gradient(180deg, #0f172a 0%, #15203a 100%) !important;
+}
+
+html.dark #nav-sidebar {
+    box-shadow: inset -1px 0 0 rgba(158, 177, 214, 0.2);
+}
+
+html.dark #nav-sidebar .border-b {
+    border-color: rgba(158, 177, 214, 0.18) !important;
+}
+
+html.dark #nav-sidebar,
+html.dark #nav-sidebar * {
+    color: var(--ssmsi-dark-text) !important;
+}
+
+html.dark #nav-sidebar a {
+    color: var(--ssmsi-dark-text) !important;
+}
+
+html.dark #nav-sidebar a:hover,
+html.dark #nav-sidebar a:focus {
+    color: var(--ssmsi-dark-text-strong) !important;
+    background: rgba(79, 128, 191, 0.2) !important;
+}
+
+html.dark #nav-sidebar a[aria-current="page"],
+html.dark #nav-sidebar a.bg-primary-50,
+html.dark #nav-sidebar a[class*="bg-primary"] {
+    color: #ffffff !important;
+    background: rgba(79, 128, 191, 0.34) !important;
+    box-shadow: inset 3px 0 0 var(--ssmsi-accent);
+}
+
+html.dark #nav-sidebar .material-symbols-outlined,
+html.dark #nav-sidebar svg {
+    color: #b9cbef !important;
+}
+
+html.dark #content,
+html.dark #content-main,
+html.dark #content-main .module,
+html.dark #content-main .inline-group,
+html.dark #content-main .bg-white,
+html.dark #content-main [class*="bg-base-"] {
+    color: var(--ssmsi-dark-text) !important;
+    background: #12203a !important;
+}
+
+html.dark #content-main h1,
+html.dark #content-main h2,
+html.dark #content-main h3,
+html.dark #content-main th,
+html.dark #content-main td,
+html.dark #content-main p,
+html.dark #content-main li,
+html.dark #content-main .font-semibold,
+html.dark #content-main label,
+html.dark #content-main .help,
+html.dark #content-main .helptext,
+html.dark #content-main .description,
+html.dark #content-main .readonly,
+html.dark #content-main .text-font-important-dark,
+html.dark #content-main .text-font-default-dark,
+html.dark #content-main .text-font-subtle-dark {
+    color: var(--ssmsi-dark-text-strong) !important;
+}
+
+html.dark #content-main input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="file"]),
+html.dark #content-main select,
+html.dark #content-main textarea {
+    color: #f5f8ff !important;
+    background: #0f172a !important;
+    border-color: rgba(158, 177, 214, 0.3) !important;
+}
+
+/* Preserve contrast for colored elements */
+#content-main [class*="bg-primary"],
+#content-main [class*="bg-red"],
+#content-main [class*="bg-green"],
+#content-main [class*="bg-yellow"],
+#content-main [class*="bg-orange"],
+html.dark #content-main [class*="bg-primary"],
+html.dark #content-main [class*="bg-red"],
+html.dark #content-main [class*="bg-green"],
+html.dark #content-main [class*="bg-yellow"],
+html.dark #content-main [class*="bg-orange"] {
+    color: #ffffff !important;
+}
+
+/* Buttons */
+.bg-primary-600,
+.hover\:bg-primary-700:hover,
+.focus\:bg-primary-700:focus,
+button[type="submit"],
+input[type="submit"],
+.button {
+    background-color: var(--ssmsi-primary) !important;
+    color: #ffffff !important;
+}
+
+.bg-primary-600:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+.button:hover {
+    background-color: rgb(53, 69, 120) !important;
+    color: #ffffff !important;
+}
+
+#content a:hover,
+#content a:focus,
+#content-main a:hover,
+#content-main a:focus {
+    color: var(--ssmsi-accent) !important;
+}
+
+/* Login/logout */
+body.login {
+    background: linear-gradient(180deg, #f8fafc 0%, #f2f6fc 100%) !important;
+}
+
+body.login #page {
+    background: #ffffff !important;
+}
+
+body.login h1,
+body.login p,
+body.login label,
+body.login .text-font-important-light,
+body.login .text-font-default-light,
+body.login .text-font-subtle-light {
+    color: var(--ssmsi-text-strong) !important;
+}
+
+html.dark body.login {
+    background: linear-gradient(180deg, #0b1326 0%, #111b33 100%) !important;
+}
+
+html.dark body.login #page {
+    background: #12203a !important;
+}
+
+html.dark body.login h1,
+html.dark body.login p,
+html.dark body.login label,
+html.dark body.login .text-font-important-dark,
+html.dark body.login .text-font-default-dark,
+html.dark body.login .text-font-subtle-dark {
+    color: var(--ssmsi-dark-text-strong) !important;
+}
+
+body.login a,
+body.login a:visited {
+    color: #2c4272 !important;
+}
+
+html.dark body.login a,
+html.dark body.login a:visited {
+    color: #b9cbef !important;
+}
+
+body.login a:hover,
+body.login a:focus,
+html.dark body.login a:hover,
+html.dark body.login a:focus {
+    color: var(--ssmsi-accent) !important;
+}
+
+.submit-row,
+[class*="shadow-xs"],
+[class*="shadow-sm"] {
+    box-shadow: 0 8px 24px rgba(37, 52, 83, 0.06) !important;
+}
+
+html.dark .submit-row,
+html.dark [class*="shadow-xs"],
+html.dark [class*="shadow-sm"] {
+    box-shadow: 0 8px 24px rgba(1, 5, 14, 0.45) !important;
+}
+
+.submit-row {
+    border-top: 1px solid rgba(60, 77, 136, 0.08);
+}
+
+html.dark .submit-row {
+    border-top: 1px solid rgba(158, 177, 214, 0.2);
+}
+
+#nav-sidebar a:has(img[alt="Home"]) {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+#nav-sidebar a img[alt="Home"] {
+    height: 3.2rem;
+    width: 12rem;
+}
+
+
+
+@media (max-width: 768px) {
+    #nav-sidebar a img[alt="Home"] {
+        height: 2.45rem;
+        width: 8rem;
+    }
+}
+
+/* Toggles Actif/Visible : vert visible partout (formulaire + liste editable), clair + dark */
+td.field-actif input[type="checkbox"],
+td.field-visible input[type="checkbox"],
+input[type="checkbox"]#id_actif,
+input[type="checkbox"]#id_visible,
+input[type="checkbox"][id*="-actif"],
+input[type="checkbox"][id*="-visible"],
+input[type="checkbox"][name="actif"],
+input[type="checkbox"][name="visible"],
+input[type="checkbox"][name$="-actif"],
+input[type="checkbox"][name$="-visible"] {
+    accent-color: #16a34a !important;
+}
+
+/* OFF state (dark): contraste adapte au fond sombre */
+html.dark td.field-actif input[type="checkbox"],
+html.dark td.field-visible input[type="checkbox"],
+html.dark input[type="checkbox"]#id_actif,
+html.dark input[type="checkbox"]#id_visible,
+html.dark input[type="checkbox"][id*="-actif"],
+html.dark input[type="checkbox"][id*="-visible"],
+html.dark input[type="checkbox"][name="actif"],
+html.dark input[type="checkbox"][name="visible"],
+html.dark input[type="checkbox"][name$="-actif"],
+html.dark input[type="checkbox"][name$="-visible"] {
+    background-color: #334155 !important;
+    border-color: #64748b !important;
+}
+
+td.field-actif input[type="checkbox"]:checked,
+td.field-visible input[type="checkbox"]:checked,
+input[type="checkbox"]#id_actif:checked,
+input[type="checkbox"]#id_visible:checked,
+input[type="checkbox"][id*="-actif"]:checked,
+input[type="checkbox"][id*="-visible"]:checked,
+input[type="checkbox"][name="actif"]:checked,
+input[type="checkbox"][name="visible"]:checked,
+input[type="checkbox"][name$="-actif"]:checked,
+input[type="checkbox"][name$="-visible"]:checked {
+    background-color: #16a34a !important;
+    border-color: #16a34a !important;
+}
+
+html.dark td.field-actif input[type="checkbox"]:checked,
+html.dark td.field-visible input[type="checkbox"]:checked,
+html.dark input[type="checkbox"]#id_actif:checked,
+html.dark input[type="checkbox"]#id_visible:checked,
+html.dark input[type="checkbox"][id*="-actif"]:checked,
+html.dark input[type="checkbox"][id*="-visible"]:checked,
+html.dark input[type="checkbox"][name="actif"]:checked,
+html.dark input[type="checkbox"][name="visible"]:checked,
+html.dark input[type="checkbox"][name$="-actif"]:checked,
+html.dark input[type="checkbox"][name$="-visible"]:checked {
+    background-color: #34d399 !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.35) !important;
+}
+
+td.field-actif input[type="checkbox"]:checked::after,
+td.field-visible input[type="checkbox"]:checked::after,
+input[type="checkbox"]#id_actif:checked::after,
+input[type="checkbox"]#id_visible:checked::after,
+input[type="checkbox"][id*="-actif"]:checked::after,
+input[type="checkbox"][id*="-visible"]:checked::after,
+input[type="checkbox"][name="actif"]:checked::after,
+input[type="checkbox"][name="visible"]:checked::after,
+input[type="checkbox"][name$="-actif"]:checked::after,
+input[type="checkbox"][name$="-visible"]:checked::after {
+    background-color: #ffffff !important;
+}
+
+html.dark td.field-actif input[type="checkbox"]:checked::after,
+html.dark td.field-visible input[type="checkbox"]:checked::after,
+html.dark input[type="checkbox"]#id_actif:checked::after,
+html.dark input[type="checkbox"]#id_visible:checked::after,
+html.dark input[type="checkbox"][id*="-actif"]:checked::after,
+html.dark input[type="checkbox"][id*="-visible"]:checked::after,
+html.dark input[type="checkbox"][name="actif"]:checked::after,
+html.dark input[type="checkbox"][name="visible"]:checked::after,
+html.dark input[type="checkbox"][name$="-actif"]:checked::after,
+html.dark input[type="checkbox"][name$="-visible"]:checked::after {
+    background-color: #ffffff !important;
+}
+
+/* Variante explicite pour les switchs Unfold (track arrondi) */
+html.dark input[type="checkbox"].rounded-full#id_actif:checked,
+html.dark input[type="checkbox"].rounded-full#id_visible:checked,
+html.dark input[type="checkbox"].rounded-full[id*="-actif"]:checked,
+html.dark input[type="checkbox"].rounded-full[id*="-visible"]:checked,
+html.dark input[type="checkbox"].rounded-full[name="actif"]:checked,
+html.dark input[type="checkbox"].rounded-full[name="visible"]:checked,
+html.dark input[type="checkbox"].rounded-full[name$="-actif"]:checked,
+html.dark input[type="checkbox"].rounded-full[name$="-visible"]:checked {
+    background-color: #34d399 !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.35), 0 0 12px rgba(52, 211, 153, 0.35) !important;
+}

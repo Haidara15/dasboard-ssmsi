@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titre %}SeriesChrono{% endblock %}
+
+{% block scripts_head %}
+<link rel="stylesheet" href="{% static 'css/accueil.css' %}">
+{% endblock %}
+
+{% block contenu %}
+<div class="conteneur">
+    <div class="entete-page">
+        <h1>Tableau de bord de la délinquance et de l’insécurité</h1>
+        <p class="intro">
+            Consultez les principales thématiques statistiques disponibles.
+        </p>
+    </div>
+
+    <div class="grille">
+        {% for thematique in thematiques %}
+            <div class="bloc carte">
+                <div class="badge-thematique">Thématique</div>
+                <div class="titre-carte">{{ thematique.titre }}</div>
+
+                <div class="texte-carte">
+                    {% if thematique.chapeau %}
+                        {{ thematique.chapeau|truncatewords:28 }}
+                    {% else %}
+                        Aucun descriptif disponible.
+                    {% endif %}
+                </div>
+
+                <a class="bouton-principal" href="{% url 'dashboard:detail_indicateur' thematique.code %}">
+                    Consulter
+                </a>
+            </div>
+        {% empty %}
+            <p>Aucune page disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

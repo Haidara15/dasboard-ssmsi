@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+media/
+staticfiles/
+
+# VSCode
+.vscode/
+
+# Environnements virtuels
+venv/
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests
+.coverage
+htmlcov/
+
+# Autres
+*.bak
+*.swp
+*.swo
+.idea/
+*.iml
+
+# Node/npm
+node_modules/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Sphinx docs
+_build/

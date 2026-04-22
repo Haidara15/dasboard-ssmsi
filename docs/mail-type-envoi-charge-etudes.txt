@@ -1,0 +1,20 @@
+Objet: Mise a jour donnees - Thematique Violences
+
+Bonjour,
+
+Vous trouverez ci-joint le gabarit de mise a jour des donnees.
+Merci de renseigner uniquement les valeurs, sans modifier les codes.
+
+Regles a respecter:
+- Ne pas changer: graphique_code, thematique_code, type_graphique, serie_code, code_x
+- Renseigner valeur (numerique)
+- Conserver les 6 colonnes obligatoires
+
+Documents de reference:
+- consignes-charge-etudes.md
+- fichier gabarit de mise a jour
+
+Delai de retour souhaite: [date]
+
+Merci,
+[Nom admin]

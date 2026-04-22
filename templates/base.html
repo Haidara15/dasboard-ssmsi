@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block titre %}SeriesChrono{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    {% block scripts_head %}{% endblock %}
+</head>
+<body>
+
+    {% block contenu %}{% endblock %}
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

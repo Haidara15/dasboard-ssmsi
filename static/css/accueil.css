@@ -1,0 +1,31 @@
+.grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.carte {
+    padding: 24px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.carte:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+}
+
+.titre-carte {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.texte-carte {
+    color: #4b5563;
+    margin-bottom: 20px;
+}
+
+.intro {
+    color: var(--texte-secondaire);
+    margin-bottom: 40px;
+}

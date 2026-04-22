@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titre %}{{ thematique.titre }}{% endblock %}
+
+{% block scripts_head %}
+<link rel="stylesheet" href="{% static 'css/detail_indicateur.css' %}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block contenu %}
+<div class="conteneur">
+    <a class="retour" href="{% url 'dashboard:accueil' %}">← Retour à l’accueil</a>
+
+    <div class="bloc entete">
+        <div class="badge-thematique">Thématique</div>
+        <h1>{{ thematique.titre }}</h1>
+
+        {% if thematique.sous_titre %}
+            <div class="sous-titre">{{ thematique.sous_titre }}</div>
+        {% endif %}
+
+        {% if thematique.chapeau %}
+            <div class="texte-long">{{ thematique.chapeau }}</div>
+        {% endif %}
+
+        {% if thematique.texte_methodologique %}
+            <div class="meta">
+                <strong>Méthodologie :</strong><br>
+                {{ thematique.texte_methodologique }}
+            </div>
+        {% endif %}
+    </div>
+
+   <!-- Graphique --> 
+
+   {% for graphique in graphiques  %}
+
+        {% if graphique.actif %}
+
+            <section class="bloc-graphique">
+
+                <div class="bloc-graphique-entete">
+                    <h2 class="bloc-graphique-titre">{{ graphique.titre }}</h2>
+                </div>
+
+                {% if graphique.sous_titre %}
+                    <p class="bloc-graphique-sous-titre">{{ graphique.sous_titre }}</p>
+                {% endif %}
+
+                {% if graphique.type_graphique == "valeur_cle" %}
+
+                    <div class="bloc-valeur-cle">
+
+                        {% if graphique.icone %}
+                            <div class="bloc-valeur-cle-icone">
+                                <img src="{{ graphique.icone.url }}" alt="{{ graphique.titre }}">
+                            </div>
+                        {% endif %}
+
+                        {% with graphique.observations.first as observation %}
+                            {% if observation %}
+                                <div class="bloc-valeur-cle-valeur">
+                                    {{ observation.valeur_formatee|default:observation.valeur }}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+
+                        {% if graphique.texte_valeur_cle %}
+                            <div class="bloc-valeur-cle-texte">
+                                {{ graphique.texte_valeur_cle }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                {% else %}
+
+                   <div class="graphique-wrapper">
+                        <canvas
+                            id="graphique-{{ graphique.code }}"
+                            data-graphique="{{ graphique.code }}">
+                        </canvas>
+                    </div> 
+
+                {% endif %}
+
+                {% if graphique.source or graphique.champ %}
+                    <div class="meta">
+                        {% if graphique.source %}<span><strong>Source :</strong> {{ graphique.source }}</span>{% endif %}
+                        {% if graphique.champ %}<span><strong>Champ :</strong> {{ graphique.champ }}</span>{% endif %}
+                    </div>
+                {% endif %}
+
+            </section>
+
+        {% endif %}
+    {% endfor %}
+
+   <!-- Bloc graphique -->
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/graphiques.js' %}?v={% now "U" %}"></script>
+<script src="{% static 'js/detail_indicateur.js' %}"></script>
+{% endblock %}

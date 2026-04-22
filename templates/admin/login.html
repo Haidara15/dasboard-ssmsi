@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% load i18n static %}
+
+{% block scripts_head %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 60px auto 0 auto;
+            background: var(--fond-bloc);
+            border-radius: var(--rayon);
+            box-shadow: var(--ombre);
+            padding: 2.5rem 2rem 2rem 2rem;
+        }
+        .login-title {
+            color: var(--bleu-principal);
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .login-form label {
+            color: var(--texte-principal);
+            font-weight: 600;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid var(--bordure);
+            border-radius: 8px;
+        }
+        .login-form button {
+            width: 100%;
+            background: var(--bleu-principal);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-form button:hover {
+            background: var(--orange-principal);
+        }
+        .login-footer-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.2rem;
+            color: var(--bleu-principal);
+        }
+    </style>
+{% endblock %}
+
+{% block titre %}Connexion - SSMSI{% endblock %}
+
+{% block contenu %}
+    {% include "partials/navbar.html" %}
+    <div class="login-container">
+        <div class="login-title">Connexion à l’espace SSMSI</div>
+        {% if form.errors or form.non_field_errors %}
+            <div class="errornote">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            <label for="id_username">Nom d’utilisateur</label>
+            {{ form.username }}
+            <label for="id_password">Mot de passe</label>
+            {{ form.password }}
+            <button type="submit">Se connecter</button>
+        </form>
+        {# Lien mot de passe oublié supprimé pour usage interne #}
+    </div>
+    {% include "partials/footer.html" with year=2026 %}
+{% endblock %}
